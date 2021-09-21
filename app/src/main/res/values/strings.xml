@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SimpleJetpackCompose</string>
+    <string name="news_image">news_image</string>
+    <string name="title_activity_detail">DetailActivity</string>
+</resources>
