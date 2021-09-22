@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zaidan.simplejetpackcompose.data.MainRepository
 import com.zaidan.simplejetpackcompose.data.response.ArticlesItem
+import com.zaidan.simplejetpackcompose.ui.main.NewsCategory
+import com.zaidan.simplejetpackcompose.ui.main.getNewsCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -16,16 +18,25 @@ class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ): ViewModel() {
 
-    val news: MutableState<List<ArticlesItem>> = mutableStateOf(listOf())
+    val news: MutableState<List<ArticlesItem>> = mutableStateOf(ArrayList())
+    val selectedCategory: MutableState<NewsCategory?> = mutableStateOf(null)
+
     init {
-        fetchNews()
+        fetchNews("")
     }
 
-    private fun fetchNews() = viewModelScope.launch {
-        mainRepository.getNews("").collect { result ->
-            result.data?.articles?.let {
-                news.value = it
+    fun fetchNews(category: String?) = viewModelScope.launch {
+        category?.let {
+            mainRepository.getNews(it).collect { result ->
+                result.data?.articles?.let { item ->
+                    news.value = item
+                }
             }
         }
+    }
+
+    fun onSelectedCategoryChanged(category: String) {
+        val newCategory = getNewsCategory(category)
+        selectedCategory.value = newCategory
     }
 }
