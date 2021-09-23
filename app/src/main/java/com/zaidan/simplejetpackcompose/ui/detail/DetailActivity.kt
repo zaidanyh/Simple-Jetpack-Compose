@@ -11,13 +11,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.zaidan.simplejetpackcompose.ui.theme.SimpleJetpackComposeTheme
 
 class DetailActivity : ComponentActivity() {
+
+    companion object {
+        const val KEY_DETAIL = "key_detail"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SimpleJetpackComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    Greeting("This is Detail Activity")
                 }
             }
         }

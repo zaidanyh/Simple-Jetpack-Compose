@@ -6,10 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.ui.Modifier
 import com.zaidan.simplejetpackcompose.ui.MainViewModel
-import com.zaidan.simplejetpackcompose.ui.component.ItemNews
+import com.zaidan.simplejetpackcompose.ui.component.MainContent
 import com.zaidan.simplejetpackcompose.ui.component.MainTopBar
+import com.zaidan.simplejetpackcompose.utils.ShimmerAnimation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val newsList = viewModel.news.value
             val selectedCategory = viewModel.selectedCategory.value
+            val isLoading = viewModel.loading.value
 
             Column {
                 MainTopBar(
@@ -29,11 +31,15 @@ class MainActivity : ComponentActivity() {
                     onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
                     onFetchNews = viewModel::fetchNews
                 )
-                LazyColumn {
-                    itemsIndexed(
-                        items = newsList
-                    ) { _, news ->
-                        ItemNews(news = news, onClick = {})
+
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    if (!isLoading) MainContent(this@MainActivity, newsList = newsList)
+                    else LazyColumn {
+                        repeat(5) {
+                            item { ShimmerAnimation() }
+                        }
                     }
                 }
             }
