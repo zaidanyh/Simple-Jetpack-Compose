@@ -1,4 +1,4 @@
-package com.zaidan.simplejetpackcompose.ui.component
+package com.zaidan.simplejetpackcompose.ui.component.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

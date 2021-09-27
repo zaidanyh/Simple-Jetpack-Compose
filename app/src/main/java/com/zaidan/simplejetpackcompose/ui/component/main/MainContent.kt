@@ -1,4 +1,4 @@
-package com.zaidan.simplejetpackcompose.ui.component
+package com.zaidan.simplejetpackcompose.ui.component.main
 
 import android.content.Context
 import android.content.Intent

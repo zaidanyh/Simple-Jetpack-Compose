@@ -1,4 +1,4 @@
-package com.zaidan.simplejetpackcompose.ui
+package com.zaidan.simplejetpackcompose.ui.main
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zaidan.simplejetpackcompose.data.MainRepository
 import com.zaidan.simplejetpackcompose.data.response.ArticlesItem
-import com.zaidan.simplejetpackcompose.ui.main.NewsCategory
-import com.zaidan.simplejetpackcompose.ui.main.getNewsCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import com.zaidan.simplejetpackcompose.ui.component.ShimmerItem
+import com.zaidan.simplejetpackcompose.ui.component.main.ShimmerItem
 import com.zaidan.simplejetpackcompose.ui.theme.ShimmerColorShades
 
 @Composable

@@ -7,9 +7,9 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Modifier
-import com.zaidan.simplejetpackcompose.ui.MainViewModel
-import com.zaidan.simplejetpackcompose.ui.component.MainContent
-import com.zaidan.simplejetpackcompose.ui.component.MainTopBar
+import com.zaidan.simplejetpackcompose.ui.component.main.MainContent
+import com.zaidan.simplejetpackcompose.ui.component.main.MainTopBar
+import com.zaidan.simplejetpackcompose.ui.theme.SimpleJetpackComposeTheme
 import com.zaidan.simplejetpackcompose.utils.ShimmerAnimation
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,20 +25,24 @@ class MainActivity : ComponentActivity() {
             val selectedCategory = viewModel.selectedCategory.value
             val isLoading = viewModel.loading.value
 
-            Column {
-                MainTopBar(
-                    selectedCategory = selectedCategory,
-                    onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
-                    onFetchNews = viewModel::fetchNews
-                )
+            SimpleJetpackComposeTheme(
+                darkTheme = false,
+            ) {
+                Column {
+                    MainTopBar(
+                        selectedCategory = selectedCategory,
+                        onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
+                        onFetchNews = viewModel::fetchNews
+                    )
 
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    if (!isLoading) MainContent(this@MainActivity, newsList = newsList)
-                    else LazyColumn {
-                        repeat(5) {
-                            item { ShimmerAnimation() }
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        if (!isLoading) MainContent(this@MainActivity, newsList = newsList)
+                        else LazyColumn {
+                            repeat(7) {
+                                item { ShimmerAnimation() }
+                            }
                         }
                     }
                 }

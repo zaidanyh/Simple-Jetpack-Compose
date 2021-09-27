@@ -2,4 +2,6 @@
     <string name="app_name">SimpleJetpackCompose</string>
     <string name="news_image">news_image</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="view_more">Lebih banyak…</string>
+    <string name="author">Penulis : %1$s</string>
 </resources>
