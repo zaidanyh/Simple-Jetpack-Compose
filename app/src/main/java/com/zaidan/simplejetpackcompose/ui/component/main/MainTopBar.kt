@@ -1,5 +1,7 @@
 package com.zaidan.simplejetpackcompose.ui.component.main
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -14,11 +16,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.zaidan.simplejetpackcompose.R
+import com.zaidan.simplejetpackcompose.ui.favorit.FavoriteActivity
 import com.zaidan.simplejetpackcompose.ui.main.NewsCategory
 import com.zaidan.simplejetpackcompose.ui.main.getAllNewsCategory
 
 @Composable
 fun MainTopBar(
+    context: Context,
     selectedCategory: NewsCategory?,
     onSelectedCategoryChanged: (String) -> Unit,
     onFetchNews: (String) -> Unit
@@ -47,7 +51,7 @@ fun MainTopBar(
                 ) {
                     val menu = createRef()
                     IconButton(
-                        onClick = {},
+                        onClick = { context.startActivity(Intent(context, FavoriteActivity::class.java)) },
                         modifier = Modifier
                             .constrainAs(menu) {
                                 end.linkTo(parent.end)

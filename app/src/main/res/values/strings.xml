@@ -4,4 +4,5 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="view_more">Lebih banyak…</string>
     <string name="author">Penulis : %1$s</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
 </resources>

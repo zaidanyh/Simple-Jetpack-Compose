@@ -30,13 +30,14 @@ class MainActivity : ComponentActivity() {
             ) {
                 Column {
                     MainTopBar(
+                        this@MainActivity,
                         selectedCategory = selectedCategory,
                         onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
                         onFetchNews = viewModel::fetchNews
                     )
 
                     Box(
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         if (!isLoading) MainContent(this@MainActivity, newsList = newsList)
                         else LazyColumn {
