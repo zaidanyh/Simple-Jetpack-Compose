@@ -7,10 +7,12 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Modifier
 import com.zaidan.simplejetpackcompose.ui.component.detail.TopBarDetail
 import com.zaidan.simplejetpackcompose.ui.component.main.MainContent
 import com.zaidan.simplejetpackcompose.ui.theme.SimpleJetpackComposeTheme
+import com.zaidan.simplejetpackcompose.utils.ShimmerAnimation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +23,9 @@ class FavoriteActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val favList = viewModel.favNews.value
+            val favList = viewModel.fetchFav.value
+            val isLoading = viewModel.loading.value
+
             SimpleJetpackComposeTheme(
                 darkTheme = false
             ) {
@@ -30,7 +34,12 @@ class FavoriteActivity : ComponentActivity() {
                     Box(
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        MainContent(context = this@FavoriteActivity, newsList = favList)
+                        if (!isLoading) MainContent(context = this@FavoriteActivity, newsList  = favList)
+                        else LazyColumn {
+                            repeat(7) {
+                                item { ShimmerAnimation() }
+                            }
+                        }
                     }
                 }
             }
