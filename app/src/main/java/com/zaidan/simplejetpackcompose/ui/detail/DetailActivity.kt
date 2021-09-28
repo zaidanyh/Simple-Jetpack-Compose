@@ -5,10 +5,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.ui.res.painterResource
 import com.zaidan.simplejetpackcompose.R
 import com.zaidan.simplejetpackcompose.data.response.ArticlesItem
@@ -32,6 +29,7 @@ class DetailActivity : ComponentActivity() {
         setContent {
             article = intent.getParcelableExtra(KEY_DETAIL)
             if (article != null) {
+
                 val state = viewModel.stateFloating.value
                 SimpleJetpackComposeTheme(
                     darkTheme = false
@@ -43,12 +41,17 @@ class DetailActivity : ComponentActivity() {
                         bottomBar = {},
                         drawerContent = {},
                         floatingActionButton = {
-                            FloatingActionButton(onClick = {}) {
+                            FloatingActionButton(onClick = {},
+                             backgroundColor = MaterialTheme.colors.primary) {
                                 IconButton(onClick = {
-                                    onChangedState(state)
+                                    onChangedState()
+                                    viewModel.onChangedFloatingState()
                                 }) {
-                                    Icon(painter = if (!state) painterResource(id = R.drawable.ic_baseline_favorite_border)
-                                    else painterResource(id = R.drawable.ic_baseline_favorite), contentDescription = "")
+                                    Icon(
+                                        painter = if (!state) painterResource(id = R.drawable.ic_baseline_favorite_border)
+                                        else painterResource(id = R.drawable.ic_baseline_favorite), contentDescription = "",
+                                        tint = MaterialTheme.colors.onPrimary
+                                    )
                                 }
                             }
                         }
@@ -65,10 +68,9 @@ class DetailActivity : ComponentActivity() {
         }
     }
 
-    private fun onChangedState(state: Boolean) {
-        val newState = !state
+    private fun onChangedState() {
         article?.let {
-            if (!newState) {
+            if (viewModel.stateFloating.value) {
                 viewModel.deleteFromDb(it)
                 Toast.makeText(this, "Artikel ini telah dihapus dari daftar favorit!", Toast.LENGTH_SHORT).show()
             } else {
@@ -86,6 +88,5 @@ class DetailActivity : ComponentActivity() {
                 Toast.makeText(this, "Artikel ini telah ditambahkan ke daftar favorit!", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel.onChangedFloatingState(newState)
     }
 }

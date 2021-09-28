@@ -32,7 +32,7 @@ fun TopBarDetail(
                         .align(Alignment.CenterVertically)
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_baseline_keyboard_arrow_left),
+                        painter = painterResource(id = R.drawable.ic_baseline_arrow_back_ios_new),
                         contentDescription = null
                     )
                 }

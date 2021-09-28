@@ -16,8 +16,8 @@ class DetailViewModel @Inject constructor(
 
     val stateFloating = mutableStateOf(false)
 
-    fun onChangedFloatingState(newState: Boolean) {
-        stateFloating.value = newState
+    fun onChangedFloatingState() {
+        stateFloating.value = !stateFloating.value
     }
 
     fun insertToDb(articlesItem: ArticlesItem) = viewModelScope.launch {

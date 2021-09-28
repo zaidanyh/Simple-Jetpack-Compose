@@ -1,13 +1,14 @@
 package com.zaidan.simplejetpackcompose.ui.main
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zaidan.simplejetpackcompose.data.MainRepository
 import com.zaidan.simplejetpackcompose.data.response.ArticlesItem
+import com.zaidan.simplejetpackcompose.utils.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,8 +18,10 @@ class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ): ViewModel() {
 
-    val news: MutableState<List<ArticlesItem>> = mutableStateOf(ArrayList())
-    val selectedCategory: MutableState<NewsCategory?> = mutableStateOf(null)
+    private val _news = MutableStateFlow<List<ArticlesItem>>(ArrayList())
+    val news: StateFlow<List<ArticlesItem>> get() = _news
+    private val _selectedCategory = MutableStateFlow<NewsCategory?>(null)
+    val selectedCategory: StateFlow<NewsCategory?> get() = _selectedCategory
     val loading = mutableStateOf(false)
 
     init {
@@ -26,13 +29,17 @@ class MainViewModel @Inject constructor(
     }
 
     fun fetchNews(category: String?) = viewModelScope.launch {
-        loading.value = true
-        delay(1500)
         category?.let {
             mainRepository.getNews(it).collect { result ->
-                result.data?.articles?.let { item ->
-                    news.value = item
-                    loading.value = false
+                when(result.status) {
+                    Status.LOADING -> loading.value = true
+                    Status.SUCCESS -> {
+                        result.data?.articles?.let { list ->
+                            _news.value = list
+                        }
+                        loading.value = false
+                    }
+                    Status.ERROR -> {}
                 }
             }
         }
@@ -40,6 +47,6 @@ class MainViewModel @Inject constructor(
 
     fun onSelectedCategoryChanged(category: String) {
         val newCategory = getNewsCategory(category)
-        selectedCategory.value = newCategory
+        _selectedCategory.value = newCategory
     }
 }
