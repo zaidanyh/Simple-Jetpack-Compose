@@ -20,6 +20,7 @@ import com.zaidan.simplejetpackcompose.ui.favorit.FavoriteActivity
 import com.zaidan.simplejetpackcompose.ui.main.NewsCategory
 import com.zaidan.simplejetpackcompose.ui.main.getAllNewsCategory
 
+@ExperimentalMaterialApi
 @Composable
 fun MainTopBar(
     context: Context,

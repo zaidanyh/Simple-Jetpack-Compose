@@ -2,12 +2,10 @@ package com.zaidan.simplejetpackcompose.ui.favorit
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.zaidan.simplejetpackcompose.data.MainRepository
 import com.zaidan.simplejetpackcompose.data.response.ArticlesItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,11 +23,16 @@ class FavoriteViewModel @Inject constructor(
         fetchFavorite()
     }
 
-    private fun fetchFavorite() = viewModelScope.launch {
+    fun fetchFavorite() = viewModelScope.launch {
         loading.value = true
         mainRepository.favNews().collect {
             _fetchFav.value = it
             loading.value = false
         }
+    }
+
+    fun deleteFromDb(articlesItem: ArticlesItem) = viewModelScope.launch {
+        mainRepository.deleteNews(articlesItem
+        )
     }
 }
